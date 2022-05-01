@@ -6,6 +6,7 @@ const { NotImplementedError } = require('../extensions/index.js');
 * Implement simple binary search tree according to task description
 * using Node from extensions
 */
+
 class Node {
   constructor(data) {
     this.data = data;
@@ -15,39 +16,42 @@ class Node {
 }
 class BinarySearchTree {
   constructor(){
-    this.root = null;
+    this.tree = null;
     
   }
   root() {
-    return this.root;
+    return this.tree;
   }
 
-  add(data, root = this.root) {
-    if(root == null){
-      root = new Node(data);
-    }else if(data < root.data){
-      if(root.left == null){
-        root.left = new Node(data);
-      }else{
-        this.add(data, root.left);
-      }
-    }else if(data > root.data){
-      if(root.right == null){
-        root.right = new Node(data);
-      }else{
-        this.add(data, root.right);
-      }
+  add(data, node = this.tree){
+    if(node === null){
+      this.tree = new Node(data);
     }else{
-      return;
+      if(data < node.data){
+        if(node.left === null){
+          node.left = new Node(data);
+        }else{
+          this.add(data, node.left);
+        }
+      }else if(data > node.data){
+        if(node.right === null){
+          node.right = new Node(data);
+        }else{
+          this.add(data, node.right);
+        }
+      }else{
+        return null;
+      }
     }
   }
 
   has(data) {
-    return this.find(data) !== null;
+    let res = (this.find(data) !== null);
+    return res;
   }
 
-  find(data, root = this.root) {
-    let node = root;
+  find(data, tree = this.tree) {
+    let node = tree;
     while(node !== null){
       if (node.data === data) {
         return node;
@@ -60,51 +64,67 @@ class BinarySearchTree {
     return null;
   }
 
-  remove(data, root = this.root) {
+  remove(data, tree = this.tree) {
     if (!this.has(data)) return;
-    if (!root) {
+    if (!tree) {
         return null;
     }
-    if(data < root.data){
-      root.left = this.remove(data, root.left);
-    }else if(data> root.data){
-      root.right = this.remove(data, root.right);
+    if(data < tree.data){
+      tree.left = this.remove(data, tree.left);
+    }else if(data> tree.data){
+      tree.right = this.remove(data, tree.right);
     }else{
-      if (!root.left) {
-        return root.right;
-      }else if(!root.right) {
-          return root.left;
+      if (!tree.left) {
+        return tree.right;
+      }else if(!tree.right) {
+        return tree.left;
       }else{
-          root.data = this.min(root.right);
-          root.right = this.remove(root.data, root.right);
+        tree.data = this.min(tree.right);
+        tree.right = this.remove(tree.data, tree.right);
       }
     }
-    return root;
+    return tree;
   }
 
-  min(root = this.root) {
-    if(root == null || root == undefined){
+  min(tree = this.tree) {
+    if(tree == null || tree == undefined){
       return null;
     }
-    let node = root;
+    let min = tree.data;
+    let node = tree;
     while(node.left !== null){
+      min = node.left.data;
       node = node.left;
     }
-    return node.data;
+    return min;
   }
 
-  max(root = this.root) {
-    if(root === null){
+  max(tree = this.tree) {
+    if(tree === null){
       return null;
     }
-    let node = root;
+    let max = tree.data;
+    let node = tree;
     while(node.right !== null){
+      max = node.right.data;
       node = node.right;
+
     }
-    return node.data;
+    return max;
   }
 
 }
+
+let bst = new BinarySearchTree();
+bst.add(1);
+bst.add(5);
+bst.add(11);
+bst.add(4);
+bst.add(20);
+console.log(bst)
+
+
+
 
 module.exports = {
   BinarySearchTree
