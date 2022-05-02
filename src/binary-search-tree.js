@@ -121,7 +121,6 @@ bst.add(5);
 bst.add(11);
 bst.add(4);
 bst.add(20);
-console.log(bst)
 
 
 
