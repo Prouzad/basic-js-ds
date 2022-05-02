@@ -16,12 +16,10 @@ class Node {
 class BinarySearchTree {
 	constructor() {
 		this.tree = null;
-
 	}
 	root() {
 		return this.tree;
 	}
-
 	add(data, node = this.tree) {
 		if (node === null) {
 			this.tree = new Node(data);
@@ -48,7 +46,6 @@ class BinarySearchTree {
 		let res = (this.find(data) !== null);
 		return res;
 	}
-
 	find(data, tree = this.tree) {
 		let node = tree;
 		while (node !== null) {
@@ -84,7 +81,6 @@ class BinarySearchTree {
 		}
 		return tree;
 	}
-
 	min(tree = this.tree) {
 		if (tree == null || tree == undefined) {
 			return null;
@@ -120,7 +116,7 @@ bst.add(5);
 bst.add(11);
 bst.add(4);
 bst.add(20);
-console.log(bst)
+
 
 
 module.exports = {
